@@ -1,0 +1,31 @@
+base:
+  random_state: &rs 42
+  params_file: 'params.yaml'
+
+data:
+  external_data_path: './data/raw'
+  raw_data_path: './data/raw_full/data.csv'
+  interim_data_path: './data/interim/preprocessed_data.csv'
+  processed_data_path: './data/processed'
+  X_train_path: './data/processed/X_train.csv'
+  X_test_path: './data/processed/X_test.csv'
+  y_train_path: './data/processed/y_train.csv'
+  y_test_path: './data/processed/y_test.csv'
+  test_size: 0.2
+
+train:
+  model_name: 'XGBRegressor'
+  model_path: ./models/model.pkl
+  models:
+    XGBRegressor:
+      n_estimators: null
+      max_depth: null
+      learning_rate: null
+      random_state: *rs
+
+reports:
+  images_path: './reports/figures'
+
+mlflow:
+  experiment_name: "Apartment Rent Regression"
+  tracking_uri: "http://127.0.0.1:5000"
