@@ -1,0 +1,39 @@
+stages:
+  load_data:
+    cmd: python mlops/load_data.py --config ${base.params_file}
+    deps:
+      - mlops/load_data.py
+    outs:
+      - ${data.raw_data_path}
+
+  preprocess:
+    cmd: python mlops/preprocess_data.py --config ${base.params_file}
+    deps:
+      - mlops/preprocess_data.py
+      - ${data.raw_data_path}
+    outs:
+      - ${data.interim_data_path}
+      - ${data.X_train_path}
+      - ${data.X_test_path}
+      - ${data.y_train_path}
+      - ${data.y_test_path}
+
+  train:
+    cmd: python mlops/train.py --config ${base.params_file}
+    deps:
+      - mlops/train.py
+      - ${data.X_train_path}
+      - ${data.y_train_path}
+    outs:
+      - ${train.model_path}
+
+  evaluate:
+    cmd: python mlops/evaluate.py --config ${base.params_file}
+    deps:
+      - mlops/evaluate.py
+      - ${train.model_path}
+      - ${data.X_test_path}
+      - ${data.y_test_path}
+    outs:
+      - ${reports.images_path}/regression_plot.png
+      - ${reports.images_path}/feature_importance.png

@@ -1,0 +1,5 @@
+outs:
+- md5: 70be3991dbe26353c5c2101af2179ea4
+  size: 6309961
+  hash: md5
+  path: apartments_for_rent_classified_10K.csv

@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python mlops/load_data.py --config params.yaml
+    deps:
+    - path: mlops/load_data.py
+      hash: md5
+      md5: 3ea674d922418445dfdcf78c2e38fbc3
+      size: 948
+    outs:
+    - path: ./data/raw_full/data.csv
+      hash: md5
+      md5: 0988f1f3f1c2f72906f27e5068425dd1
+      size: 109163062
+  preprocess:
+    cmd: python mlops/preprocess_data.py --config params.yaml
+    deps:
+    - path: ./data/raw_full/data.csv
+      hash: md5
+      md5: 0988f1f3f1c2f72906f27e5068425dd1
+      size: 109163062
+    - path: mlops/preprocess_data.py
+      hash: md5
+      md5: ccd27eb13234f332409c56e16d8c1fe2
+      size: 4414
+    outs:
+    - path: ./data/interim/preprocessed_data.csv
+      hash: md5
+      md5: 62c75a744b133f8a5fa71f9b20b757d1
+      size: 5057353
+    - path: ./data/processed/X_test.csv
+      hash: md5
+      md5: f08169b958a264b31bd7d4cab75b68d9
+      size: 4704197
+    - path: ./data/processed/X_train.csv
+      hash: md5
+      md5: a4736cbc100da64e2151009f360267d5
+      size: 18816770
+    - path: ./data/processed/y_test.csv
+      hash: md5
+      md5: 9bb2de7756e4bcd3dfbac3888da97a37
+      size: 375057
+    - path: ./data/processed/y_train.csv
+      hash: md5
+      md5: e6515955ba69dd173efc7944e67e1fc1
+      size: 1500063
+  train:
+    cmd: python mlops/train.py --config params.yaml
+    deps:
+    - path: ./data/processed/X_train.csv
+      hash: md5
+      md5: a4736cbc100da64e2151009f360267d5
+      size: 18816770
+    - path: ./data/processed/y_train.csv
+      hash: md5
+      md5: e6515955ba69dd173efc7944e67e1fc1
+      size: 1500063
+    - path: mlops/train.py
+      hash: md5
+      md5: 97b533203a8296cf9c1c8dad896c4395
+      size: 1539
+    outs:
+    - path: ./models/model.pkl
+      hash: md5
+      md5: 37c44a85d5367de70c198231d793db01
+      size: 471454
+  evaluate:
+    cmd: python mlops/evaluate.py --config params.yaml
+    deps:
+    - path: ./data/processed/X_test.csv
+      hash: md5
+      md5: f08169b958a264b31bd7d4cab75b68d9
+      size: 4704197
+    - path: ./data/processed/y_test.csv
+      hash: md5
+      md5: 9bb2de7756e4bcd3dfbac3888da97a37
+      size: 375057
+    - path: ./models/model.pkl
+      hash: md5
+      md5: 37c44a85d5367de70c198231d793db01
+      size: 471454
+    - path: mlops/evaluate.py
+      hash: md5
+      md5: ed9de842aa09aa7d1e5391c82ce165c2
+      size: 2755
+    outs:
+    - path: ./reports/figures/feature_importance.png
+      hash: md5
+      md5: 1871b9ac9a81e209fd7711b8fb6dcd1f
+      size: 38020
+    - path: ./reports/figures/regression_plot.png
+      hash: md5
+      md5: 471bf20853f65725bdd341155f5b3686
+      size: 132432
