@@ -5,8 +5,8 @@ stages:
     deps:
     - path: mlops/load_data.py
       hash: md5
-      md5: 3ea674d922418445dfdcf78c2e38fbc3
-      size: 948
+      md5: 8169e734927dcd316023c69bd13b66e3
+      size: 944
     outs:
     - path: ./data/raw_full/data.csv
       hash: md5
@@ -21,8 +21,8 @@ stages:
       size: 109163062
     - path: mlops/preprocess_data.py
       hash: md5
-      md5: ccd27eb13234f332409c56e16d8c1fe2
-      size: 4414
+      md5: 6b45686875085971d255fec74a1cbd4f
+      size: 4709
     outs:
     - path: ./data/interim/preprocessed_data.csv
       hash: md5
@@ -57,13 +57,13 @@ stages:
       size: 1500063
     - path: mlops/train.py
       hash: md5
-      md5: 97b533203a8296cf9c1c8dad896c4395
-      size: 1539
+      md5: 58dbc9d7b96b5a3d45a629a0aea37788
+      size: 3636
     outs:
     - path: ./models/model.pkl
       hash: md5
-      md5: 37c44a85d5367de70c198231d793db01
-      size: 471454
+      md5: 82abf46e541f6f5554eb20cad06bfb1f
+      size: 185458481
   evaluate:
     cmd: python mlops/evaluate.py --config params.yaml
     deps:
@@ -77,18 +77,18 @@ stages:
       size: 375057
     - path: ./models/model.pkl
       hash: md5
-      md5: 37c44a85d5367de70c198231d793db01
-      size: 471454
+      md5: 82abf46e541f6f5554eb20cad06bfb1f
+      size: 185458481
     - path: mlops/evaluate.py
       hash: md5
-      md5: ed9de842aa09aa7d1e5391c82ce165c2
-      size: 2755
+      md5: d7d7ff3878e876da74f9a08852e2ba33
+      size: 3773
     outs:
     - path: ./reports/figures/feature_importance.png
       hash: md5
-      md5: 1871b9ac9a81e209fd7711b8fb6dcd1f
-      size: 38020
+      md5: 09a6bc11d9abd522d97d037718f0d0bc
+      size: 27426
     - path: ./reports/figures/regression_plot.png
       hash: md5
-      md5: 471bf20853f65725bdd341155f5b3686
-      size: 132432
+      md5: 0a41b56a284a321e03b64faabba8ef2c
+      size: 130266
