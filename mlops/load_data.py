@@ -13,7 +13,7 @@ def load_data(filepath: str, out_file: str) -> pd.DataFrame:
         if file.endswith(".csv"):
             parcial_data = pd.read_csv(os.path.join(filepath, file), sep=";", encoding='cp1252')
             data = pd.concat([data, parcial_data], axis=0)
-        print(f"Shape of the {file} is: {parcial_data.shape}")
+    print(f"Shape of the {file} is: {parcial_data.shape}")
     data.to_csv(out_file, index=False)
     print("Data loaded successfully")
     return data

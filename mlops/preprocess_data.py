@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from utils import load_config
+from utils import load_config, rewrite_yaml
 
 
 def drop_duplicates(data: pd.DataFrame) -> pd.DataFrame:
@@ -43,22 +43,26 @@ def encode_categorical(data: pd.DataFrame) -> pd.DataFrame:
     data = pd.get_dummies(data, columns=categorical_columns, drop_first=True)
     return data
 
-def scale_features(X_train: pd.DataFrame, X_test: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
+def scale_features(X_train: pd.DataFrame, X_test: pd.DataFrame, config: dict = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
+    if config:
+        config['train']['dataset_mean'] = X_train.mean().to_dict()
+        config['train']['dataset_std'] = X_train.std().to_dict()
+        rewrite_yaml(config, 'params.yaml')
     X_test_scaled = scaler.transform(X_test)
     X_train_scaled = pd.DataFrame(X_train_scaled, columns=X_train.columns)
     X_test_scaled = pd.DataFrame(X_test_scaled, columns=X_test.columns)
     return X_train_scaled, X_test_scaled
 
 def split_data(data: pd.DataFrame, target: str, 
-               X_train_path: str, X_test_path: str, y_train_path: str, y_test_path: str, 
+               X_train_path: str, X_test_path: str, y_train_path: str, y_test_path: str, config: dict = None,
                test_size: float = 0.2, random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     X = data.drop(columns=[target])
     y = data[target]
     y = np.log(y)   # log transform the target to normalize it
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)
-    X_train, X_test = scale_features(X_train, X_test)
+    X_train, X_test = scale_features(X_train, X_test, config)
     X_train.to_csv(X_train_path, index=False)
     X_test.to_csv(X_test_path, index=False)
     y_train.to_csv(y_train_path, index=False)
@@ -67,7 +71,7 @@ def split_data(data: pd.DataFrame, target: str,
     return X_train, X_test, y_train, y_test
 
 def preprocess_data(data_path: str, data_preprocessed_path: str, 
-                    X_train_path: str, X_test_path: str, y_train_path: str, y_test_path: str,
+                    X_train_path: str, X_test_path: str, y_train_path: str, y_test_path: str, config: dict = None,
                     test_size: float = 0.2, random_state: int = 42) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
     data = pd.read_csv(data_path)
     print(f"Raw data shape: {data.shape}")
@@ -83,7 +87,7 @@ def preprocess_data(data_path: str, data_preprocessed_path: str,
     data = encode_categorical(data)
     print(f"Preprocessed data shape: {data.shape}")
     data.to_csv(data_preprocessed_path, index=False)
-    X_train, X_test, y_train, y_test = split_data(data, "price", X_train_path, X_test_path, y_train_path, y_test_path, test_size, random_state)
+    X_train, X_test, y_train, y_test = split_data(data, "price", X_train_path, X_test_path, y_train_path, y_test_path, config, test_size, random_state)
     return X_train, X_test, y_train, y_test
 
 if __name__ == '__main__':
@@ -93,5 +97,5 @@ if __name__ == '__main__':
     config = load_config(args.config)
     preprocess_data(config['data']['raw_data_path'], config['data']['interim_data_path'], 
                     config['data']['X_train_path'], config['data']['X_test_path'], 
-                    config['data']['y_train_path'], config['data']['y_test_path'],
+                    config['data']['y_train_path'], config['data']['y_test_path'], config,
                     config['data']['test_size'], config['base']['random_state'])

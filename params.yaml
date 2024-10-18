@@ -1,31 +1,65 @@
 base:
-  random_state: &rs 42
-  params_file: 'params.yaml'
-
+  params_file: params.yaml
+  random_state: 42
 data:
-  external_data_path: './data/raw'
-  raw_data_path: './data/raw_full/data.csv'
-  interim_data_path: './data/interim/preprocessed_data.csv'
-  processed_data_path: './data/processed'
-  X_train_path: './data/processed/X_train.csv'
-  X_test_path: './data/processed/X_test.csv'
-  y_train_path: './data/processed/y_train.csv'
-  y_test_path: './data/processed/y_test.csv'
+  X_test_path: ./data/processed/X_test.csv
+  X_train_path: ./data/processed/X_train.csv
+  external_data_path: ./data/raw
+  interim_data_path: ./data/interim/preprocessed_data.csv
+  processed_data_path: ./data/processed
+  raw_data_path: ./data/raw_full/data.csv
   test_size: 0.2
-
+  y_test_path: ./data/processed/y_test.csv
+  y_train_path: ./data/processed/y_train.csv
+mlflow:
+  experiment_name: Apartment Rent Regression
+  tracking_uri: http://127.0.0.1:5000
+  last_run_id: f73dac486f1f4c55abc7424f75f3e281
+  log_experiment: true
+reports:
+  images_path: ./reports/figures
 train:
-  model_name: 'XGBRegressor'
+  dataset_mean:
+    bathrooms: 1.4495513282960601
+    bedrooms: 1.7430737492247914
+    square_feet: 959.1521813418385
+    latitude: 36.95684732252471
+    longitude: -91.48026723241067
+    has_photo_Thumbnail: 0.34267380491323995
+    has_photo_Yes: 0.5644910202376884
+    pets_allowed_Cats,Dogs: 0.37389730543848326
+    pets_allowed_Cats,Dogs,None: 1.2656465555428991e-05
+    pets_allowed_Dogs: 0.001215020693321183
+    pets_allowed_None: 0.04987913075394566
+    pets_allowed_unknown: 0.5567326068522105
+  dataset_std:
+    bathrooms: 0.548327779651301
+    bedrooms: 0.7393542398122871
+    square_feet: 389.3415196668386
+    latitude: 4.6022330975592
+    longitude: 15.774152413263456
+    has_photo_Thumbnail: 0.4746064888147714
+    has_photo_Yes: 0.4958266025790377
+    pets_allowed_Cats,Dogs: 0.48383992530225917
+    pets_allowed_Cats,Dogs,None: 0.0035575926629434376
+    pets_allowed_Dogs: 0.034836184886027736
+    pets_allowed_None: 0.2176965844516106
+    pets_allowed_unknown: 0.4967741284927348
+  model_name: RandomForestRegressor
   model_path: ./models/model.pkl
   models:
     XGBRegressor:
-      n_estimators: null
-      max_depth: null
-      learning_rate: null
-      random_state: *rs
-
-reports:
-  images_path: './reports/figures'
-
-mlflow:
-  experiment_name: "Apartment Rent Regression"
-  tracking_uri: "http://127.0.0.1:5000"
+      learning_rate: 0.15
+      min_child_weight: 3
+      max_depth: 7
+      n_estimators: 2000
+      random_state: 42
+    RandomForestRegressor:
+      n_estimators: 100
+      min_samples_split: 2
+      min_samples_leaf: 3
+      max_features: 9
+      max_depth: 40
+      random_state: 42
+reproduction:
+  reproduction_path: ./reproduction
