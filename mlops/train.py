@@ -6,6 +6,8 @@ import os
 import joblib
 import pandas as pd
 import xgboost
+from catboost import CatBoostRegressor
+
 from utils import load_config, rewrite_yaml
 from xgboost import XGBRegressor
 from sklearn.ensemble import RandomForestRegressor
@@ -20,6 +22,8 @@ def train(X_train_path: str, y_train_path: str, model_name: str, model_path: str
         model = XGBRegressor(**model_params)
     elif model_name == 'RandomForestRegressor':
         model = RandomForestRegressor(**model_params)
+    elif model_name == 'CatBoostRegressor':
+        model = CatBoostRegressor(**model_params)
     else:
         raise ValueError(f"Model {model_name} not supported")
     print(model)
@@ -52,6 +56,11 @@ def train(X_train_path: str, y_train_path: str, model_name: str, model_path: str
                 elif model_name == 'RandomForestRegressor':
                     mlflow.log_params(model.get_params())
                     mlflow.sklearn.log_model(model, f"{model_name}_model", signature=signature)
+                    mlflow.log_dict(model.feature_importances_, 'train_feature_importance.json')
+                elif model_name == 'CatBoostRegressor':
+                    model: CatBoostRegressor = model
+                    mlflow.log_params(model.get_params())
+                    mlflow.catboost.log_model(model, f"{model_name}_model", signature=signature)
                     mlflow.log_dict(model.feature_importances_, 'train_feature_importance.json')
                 config['mlflow']['last_run_id'] = run.info.run_id
                 rewrite_yaml(config, 'params.yaml')

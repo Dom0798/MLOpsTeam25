@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import xgboost
+from catboost import CatBoostRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from utils import load_config
 
@@ -46,6 +47,15 @@ def plot_rfr_feature_importance(model: 'Model', columns: list, save_path: str, f
     plt.close()
     print('Feature importance plot saved')
 
+def plot_catboost_feature_importance(model: 'Model', columns: list, save_path: str, file_name: str = 'feature_importance.png') -> None:
+    feature_importance = pd.Series(model.feature_importances_, index=columns)
+    feature_importance.nlargest(10).plot(kind='barh')
+    plt.title('Top 10 Feature Importance')
+    plt.tight_layout()
+    plt.savefig(os.path.join(save_path, file_name))
+    plt.close()
+    print('Feature importance plot saved')
+
 def eval(model_path: str, model_name: str, X_test_path: str, y_test_path: str, report_path: str, config: dict = None) -> None:
     model = joblib.load(model_path)
     X_test = pd.read_csv(X_test_path)
@@ -64,6 +74,8 @@ def eval(model_path: str, model_name: str, X_test_path: str, y_test_path: str, r
         plot_xgb_feature_importance(model, report_path)
     elif model_name == 'RandomForestRegressor':
         plot_rfr_feature_importance(model, X_test.columns, report_path)
+    elif model_name == 'CatBoostRegressor':
+        plot_catboost_feature_importance(model, X_test.columns, report_path)
     if config:
         if config['mlflow']['log_experiment']:
             experiment = mlflow.set_tracking_uri(config['mlflow']['tracking_uri'])
