@@ -14,38 +14,36 @@ data:
 mlflow:
   experiment_name: Apartment Rent Regression
   tracking_uri: http://127.0.0.1:5000
-  last_run_id: f73dac486f1f4c55abc7424f75f3e281
+  last_run_id: a85da0e013ce49df8f5d79dd7efcef14
   log_experiment: true
 reports:
   images_path: ./reports/figures
 train:
   dataset_mean:
-    bathrooms: 1.4495513282960601
-    bedrooms: 1.7430737492247914
-    square_feet: 959.1521813418385
-    latitude: 36.95684732252471
-    longitude: -91.48026723241067
-    has_photo_Thumbnail: 0.34267380491323995
-    has_photo_Yes: 0.5644910202376884
-    pets_allowed_Cats,Dogs: 0.37389730543848326
-    pets_allowed_Cats,Dogs,None: 1.2656465555428991e-05
-    pets_allowed_Dogs: 0.001215020693321183
-    pets_allowed_None: 0.04987913075394566
-    pets_allowed_unknown: 0.5567326068522105
+    bathrooms: 1.4497108436784227
+    bedrooms: 1.7433152373359655
+    square_feet: 960.6086582387406
+    latitude: 36.95384167014666
+    longitude: -91.47973707528189
+    has_photo_Thumbnail: 0.34308998645963834
+    has_photo_Yes: 0.5638738088910823
+    pets_allowed_Cats,Dogs: 0.3733596547840502
+    pets_allowed_Cats,Dogs,None: 1.2654543613884565e-05
+    pets_allowed_Dogs: 0.0012021816433190338
+    pets_allowed_unknown: 0.6071143844197259
   dataset_std:
-    bathrooms: 0.548327779651301
-    bedrooms: 0.7393542398122871
-    square_feet: 389.3415196668386
-    latitude: 4.6022330975592
-    longitude: 15.774152413263456
-    has_photo_Thumbnail: 0.4746064888147714
-    has_photo_Yes: 0.4958266025790377
-    pets_allowed_Cats,Dogs: 0.48383992530225917
-    pets_allowed_Cats,Dogs,None: 0.0035575926629434376
-    pets_allowed_Dogs: 0.034836184886027736
-    pets_allowed_None: 0.2176965844516106
-    pets_allowed_unknown: 0.4967741284927348
-  model_name: RandomForestRegressor
+    bathrooms: 0.5487272576240166
+    bedrooms: 0.7387245300082385
+    square_feet: 427.33350442648026
+    latitude: 4.598555203970112
+    longitude: 15.770153369902438
+    has_photo_Thumbnail: 0.474744246682753
+    has_photo_Yes: 0.49590649177462914
+    pets_allowed_Cats,Dogs: 0.48369947662387036
+    pets_allowed_Cats,Dogs,None: 0.003557322534418908
+    pets_allowed_Dogs: 0.0346518628298532
+    pets_allowed_unknown: 0.4883948475697584
+  model_name: CatBoostRegressor
   model_path: ./models/model.pkl
   models:
     XGBRegressor:
@@ -61,5 +59,9 @@ train:
       max_features: 9
       max_depth: 40
       random_state: 42
+    CatBoostRegressor:
+      iterations: 100
+      learning_rate: 1
+      depth: 16
 reproduction:
   reproduction_path: ./reproduction
