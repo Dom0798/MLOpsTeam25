@@ -9,9 +9,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.preprocessing import StandardScaler
+from .utils import load_config
 from xgboost import XGBRegressor
 
 warnings.filterwarnings("ignore")
@@ -75,7 +77,7 @@ class ApartmentPriceModel:
             if file.endswith(".csv"):
                 parcial_data = pd.read_csv(os.path.join(self.filepath, file), sep=";", encoding='cp1252')
                 self.data = pd.concat([self.data, parcial_data], axis=0)
-            print(f"Shape of the {file} is: {parcial_data.shape}")
+                print(f"Shape of the {file} is: {parcial_data.shape}")
         return self
     
     @staticmethod
@@ -145,16 +147,16 @@ class ApartmentPriceModel:
         y = self.data["price"]
         y = np.log(y)
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        self.X_train, self.X_test = self.__scale_features(self.X_train, self.X_test)
-        self.X_train.to_csv("..\data\processed\X_train.csv", index=False)
-        self.X_test.to_csv("..\data\processed\X_test.csv", index=False)
+        self.X_train_scaled, self.X_test_scaled = self.__scale_features(self.X_train, self.X_test)
+        self.X_train_scaled.to_csv("..\data\processed\X_train.csv", index=False)
+        self.X_test_scaled.to_csv("..\data\processed\X_test.csv", index=False)
         self.y_train.to_csv("..\data\processed\y_train.csv", index=False)
         self.y_test.to_csv("..\data\processed\y_test.csv", index=False)
         return self
     
     def train_model(self) -> ApartmentPriceModel:
         self.model = XGBRegressor()
-        self.model.fit(self.X_train, self.y_train)
+        self.model.fit(self.X_train_scaled, self.y_train.squeeze())
         print("Model trained")
         return self
     
@@ -185,7 +187,7 @@ class ApartmentPriceModel:
         plt.show()
 
     def evaluate_model(self) -> ApartmentPriceModel:
-        y_pred = self.model.predict(self.X_test)
+        y_pred = self.model.predict(self.X_test_scaled)
         mse = mean_squared_error(self.y_test, y_pred)
         rmse = np.sqrt(mse)
         r2 = r2_score(self.y_test, y_pred)
@@ -193,9 +195,30 @@ class ApartmentPriceModel:
         print(f"MSE: {mse:.4f}")
         print(f"R2: {r2:.4f}")
         self.__plot_regression(self.y_test, y_pred, rmse, mse, r2)
-        self.__plot_feature_importance(self.model, self.X_test)
+        self.__plot_feature_importance(self.model, self.X_test_scaled)
         return self
     
+    def predict(self, input_data):
+        input_data = np.array(input_data).reshape(1, -1)
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(self.X_train)
+        scaled_input = scaler.transform(input_data)
+        return self.model.predict(scaled_input)[0]
+
+class ApartmentPriceModelwithParams(ApartmentPriceModel):
+    def __init__(self, filepath: str, params_paths: str) -> None:
+        super().__init__(filepath)
+        self.config = load_config(params_paths)
+
+    def train_model(self) -> ApartmentPriceModelwithParams:
+        if self.config['train']['model_name'] == 'XGBRegressor':
+            self.model = XGBRegressor(**self.config['train']['models'][self.config['train']['model_name']])
+        elif self.config['train']['model_name'] == 'RandomForestRegressor':
+            self.model = RandomForestRegressor(**self.config['train']['models'][self.config['train']['model_name']])
+        print(self.model)
+        self.model.fit(self.X_train_scaled, self.y_train.squeeze())
+        return self
+
 
 def main():
     data_explorer = DataExplorer()
