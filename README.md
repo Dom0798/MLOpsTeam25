@@ -10,7 +10,7 @@
 MLOps project
 
 ## Project Organization
-
+```
 MLOpsTeam25/
 ├── .dvc
 ├── data
@@ -39,3 +39,6 @@ MLOpsTeam25/
 ├── params.yaml
 ├── README.md
 
+```
+ 
+--------
