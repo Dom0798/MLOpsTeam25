@@ -1,4 +1,7 @@
-# mlops
+# TC5044 MLOPS - Team 25
+# Overview
+### The opportunity presented in this document lies in the lack of an adequate system for the classification and selection of apartments in the United States of America. However, a detailed study is available that includes key apartment characteristics such as location, price, size, among others, allowing for a more in-depth and structured analysis. The objective is to develop a model that enables the visualization of the best price for renting an apartment based on the characteristics from the dataset available.
+# The dataset used in this project is Apartment for rent classified https://archive.ics.uci.edu/dataset/555/apartment+for+rent+classified
 
 <a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
     <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
@@ -8,54 +11,31 @@ MLOps project
 
 ## Project Organization
 
-```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
+MLOpsTeam25/
+├── .dvc
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         mlops and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── mlops   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes mlops a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
-```
-
---------
+│   ├── interim
+│   ├── processed
+│   └── raw
+│   └── raw_full
+├── docs
+├── mlops
+├── models
+    ├── ApartmentRent.py
+    ├── __init__.py
+    ├── evaluate.py
+    ├── load_data.py
+    ├── preprocess_data.py
+    ├── reproduce.py
+    ├── train.py
+    ├── utils.py
+├── notebooks
+├── references
+├── reports
+│   └── figures
+├── requirements.txt
+├── setup.cfg                     
+├── pyproject.toml  
+├── params.yaml
+├── README.md
 
