@@ -41,5 +41,17 @@ MLOpsTeam25/
 ├── README.md
 
 ```
+
+## Instructions to reproduce the pipeline
+
+If you are using a local version of MLflow, use the following command:
+
+1. ```mlflow server --host 127.0.0.1 --port 5000```
+
+To reproduce this project use the following instructions:
+
+1. Install all the dependencies ```pip install -r requirements.txt```
+2. Execute the pipeline ```dvc repro --force```
+
  
 --------![image](https://github.com/user-attachments/assets/b6155c2c-f3e2-4ddb-b2dc-105e201e5b69)
