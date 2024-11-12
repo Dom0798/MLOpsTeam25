@@ -43,7 +43,7 @@ train:
     pets_allowed_Cats,Dogs,None: 0.003557322534418908
     pets_allowed_Dogs: 0.0346518628298532
     pets_allowed_unknown: 0.4883948475697584
-  model_name: CatBoostRegressor
+  model_name: XGBRegressor
   model_path: ./models/model.pkl
   models:
     XGBRegressor:

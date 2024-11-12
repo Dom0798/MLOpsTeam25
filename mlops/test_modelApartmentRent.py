@@ -40,6 +40,8 @@ def model_trained():
 
 ## Test data loading
 def test_load_data(model):
+    print("Data shape:", model.data.shape)
+    print("Expected shape:", (10000+99492, 22))
     assert model.data.shape == (10000+99492, 22)    # known valus from 10k and 100k datasets
 
 ## Test preprocess_data method
@@ -108,5 +110,11 @@ def test_input_ranges_n_inference(model_trained, input_data = [1, 1, 120, 25, -7
 ## Test whole integration
 @pytest.mark.integtest
 def test_integration(model_w_params):
-    prediction = model_w_params.load_data().preprocess_data().split_data().train_model().evaluate_model().predict([1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1, 0])
-    print(f"Predicted price: ${np.exp(prediction):.3f}")
+    model = model_w_params.load_data()
+    test_load_data(model)
+    test_preprocess_data_columns(model)
+    model.split_data()
+    model.train_model()
+    test_evaluation_w_benchmark(model)
+    model.evaluate_model()
+    test_input_ranges_n_inference(model, [1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1, 0])

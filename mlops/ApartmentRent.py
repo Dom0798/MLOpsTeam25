@@ -77,7 +77,7 @@ class ApartmentPriceModel:
             if file.endswith(".csv"):
                 parcial_data = pd.read_csv(os.path.join(self.filepath, file), sep=";", encoding='cp1252')
                 self.data = pd.concat([self.data, parcial_data], axis=0)
-                print(f"Shape of the {file} is: {parcial_data.shape}")
+                # print(f"Shape of the {file} is: {parcial_data.shape}")
         return self
     
     @staticmethod
