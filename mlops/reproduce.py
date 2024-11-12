@@ -1,3 +1,6 @@
+# usage: python mlops/reproduce.py --config params.yaml --run_id 3f0409dddc2a4a3cad322b38e88bbe5e
+# usage: python mlops/reproduce.py --config params.yaml
+
 import argparse
 import os
 

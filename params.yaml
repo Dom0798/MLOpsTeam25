@@ -15,35 +15,37 @@ mlflow:
   experiment_name: Apartment Rent Regression
   tracking_uri: http://127.0.0.1:5000
   last_run_id: a85da0e013ce49df8f5d79dd7efcef14
-  log_experiment: true
+  log_experiment: false
 reports:
   images_path: ./reports/figures
 train:
   dataset_mean:
-    bathrooms: 1.4497108436784227
-    bedrooms: 1.7433152373359655
-    square_feet: 960.6086582387406
-    latitude: 36.95384167014666
-    longitude: -91.47973707528189
-    has_photo_Thumbnail: 0.34308998645963834
-    has_photo_Yes: 0.5638738088910823
-    pets_allowed_Cats,Dogs: 0.3733596547840502
-    pets_allowed_Cats,Dogs,None: 1.2654543613884565e-05
-    pets_allowed_Dogs: 0.0012021816433190338
-    pets_allowed_unknown: 0.6071143844197259
+    bathrooms: 1.44955133
+    bedrooms: 1.74307375
+    square_feet: 959.15218134
+    latitude: 36.95684732
+    longitude: -91.48026723
+    has_photo_Thumbnail: 0.3426738
+    has_photo_Yes: 0.56449102
+    pets_allowed_Cats,Dogs: 0.37389731
+    pets_allowed_Cats,Dogs,None: 1.266e-05
+    pets_allowed_Dogs: 0.00121502
+    pets_allowed_None: 0.04987913
+    pets_allowed_unknown: 0.55673261
   dataset_std:
-    bathrooms: 0.5487272576240166
-    bedrooms: 0.7387245300082385
-    square_feet: 427.33350442648026
-    latitude: 4.598555203970112
-    longitude: 15.770153369902438
-    has_photo_Thumbnail: 0.474744246682753
-    has_photo_Yes: 0.49590649177462914
-    pets_allowed_Cats,Dogs: 0.48369947662387036
-    pets_allowed_Cats,Dogs,None: 0.003557322534418908
-    pets_allowed_Dogs: 0.0346518628298532
-    pets_allowed_unknown: 0.4883948475697584
-  model_name: XGBRegressor
+    bathrooms: 0.54832778
+    bedrooms: 0.73935424
+    square_feet: 389.34151967
+    latitude: 4.6022331
+    longitude: 15.77415241
+    has_photo_Thumbnail: 0.47460649
+    has_photo_Yes: 0.4958266
+    pets_allowed_Cats,Dogs: 0.48383993
+    pets_allowed_Cats,Dogs,None: 0.00355759
+    pets_allowed_Dogs: 0.03483618
+    pets_allowed_None: 0.21769658
+    pets_allowed_unknown: 0.49677413
+  model_name: RandomForestRegressor
   model_path: ./models/model.pkl
   models:
     XGBRegressor:
@@ -65,3 +67,5 @@ train:
       depth: 16
 reproduction:
   reproduction_path: ./reproduction
+onnx:
+  onnx_model_path: ./models/model.onnx

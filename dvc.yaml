@@ -37,3 +37,12 @@ stages:
     outs:
       - ${reports.images_path}/regression_plot.png
       - ${reports.images_path}/feature_importance.png
+
+  convert_to_onnx:
+    cmd: python mlops/convert_to_onnx.py --config ${base.params_file}
+    deps:
+      - mlops/convert_to_onnx.py
+      - ${train.model_path}
+      - ${data.X_train_path}
+    outs:
+      - ${onnx.onnx_model_path}

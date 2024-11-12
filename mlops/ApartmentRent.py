@@ -202,7 +202,10 @@ class ApartmentPriceModel:
         input_data = np.array(input_data).reshape(1, -1)
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(self.X_train)
+        # print(scaler.mean_)
         scaled_input = scaler.transform(input_data)
+        # print(scaled_input.astype(np.float32))
+        # print(scaled_input)
         return self.model.predict(scaled_input)[0]
 
 class ApartmentPriceModelwithParams(ApartmentPriceModel):
@@ -218,6 +221,20 @@ class ApartmentPriceModelwithParams(ApartmentPriceModel):
         print(self.model)
         self.model.fit(self.X_train_scaled, self.y_train.squeeze())
         return self
+    
+    def predict(self, input_data):
+        input_data = np.array(input_data).reshape(1, -1)
+        # print('1st type', input_data.dtype)
+        scaler = StandardScaler()
+        # X_train_scaled = scaler.fit_transform(self.X_train)
+        scaler.mean_ = np.array(list(self.config['train']['dataset_mean'].values()))
+        scaler.scale_ = np.array(list(self.config['train']['dataset_std'].values()))
+        scaled_input = scaler.transform(input_data)
+        scaled_input = scaled_input.astype(np.float32)
+        # print("mean", scaler.mean_)
+        # print("input", scaled_input)
+        # print("input type", scaled_input.dtype)
+        return self.model.predict(scaled_input)[0]
 
 
 def main():

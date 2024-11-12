@@ -47,8 +47,8 @@ def scale_features(X_train: pd.DataFrame, X_test: pd.DataFrame, config: dict = N
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     if config:
-        config['train']['dataset_mean'] = X_train.mean().to_dict()
-        config['train']['dataset_std'] = X_train.std().to_dict()
+        config['train']['dataset_mean'] = X_train.mean().round(8).to_dict()
+        config['train']['dataset_std'] = X_train.std().round(8).to_dict()
         rewrite_yaml(config, 'params.yaml')
     X_test_scaled = scaler.transform(X_test)
     X_train_scaled = pd.DataFrame(X_train_scaled, columns=X_train.columns)
