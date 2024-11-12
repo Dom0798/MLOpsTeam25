@@ -16,7 +16,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
 
-from .ApartmentRent import ApartmentPriceModel, ApartmentPriceModelwithParams
+from mlops.ApartmentRent import ApartmentPriceModel, ApartmentPriceModelwithParams
 
 warnings.filterwarnings("ignore")
 
