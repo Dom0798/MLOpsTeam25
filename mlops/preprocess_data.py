@@ -4,6 +4,7 @@ from typing import Tuple
 
 import numpy as np
 import pandas as pd
+import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from utils import load_config, rewrite_yaml
@@ -53,6 +54,8 @@ def scale_features(X_train: pd.DataFrame, X_test: pd.DataFrame, config: dict = N
     X_test_scaled = scaler.transform(X_test)
     X_train_scaled = pd.DataFrame(X_train_scaled, columns=X_train.columns)
     X_test_scaled = pd.DataFrame(X_test_scaled, columns=X_test.columns)
+    with open('models/scaler.pkl', 'wb') as f:
+        pickle.dump(scaler, f)
     return X_train_scaled, X_test_scaled
 
 def split_data(data: pd.DataFrame, target: str, 

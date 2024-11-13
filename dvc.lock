@@ -5,110 +5,110 @@ stages:
     deps:
     - path: mlops/load_data.py
       hash: md5
-      md5: 8169e734927dcd316023c69bd13b66e3
-      size: 944
+      md5: 69575a58117f1010344f37f3343e2065
+      size: 919
     outs:
     - path: ./data/raw_full/data.csv
       hash: md5
-      md5: 0988f1f3f1c2f72906f27e5068425dd1
-      size: 109163062
+      md5: 5628ae70e57e182b7e07538670fb9aca
+      size: 109023723
   preprocess:
     cmd: python mlops/preprocess_data.py --config params.yaml
     deps:
     - path: ./data/raw_full/data.csv
       hash: md5
-      md5: 0988f1f3f1c2f72906f27e5068425dd1
-      size: 109163062
+      md5: 5628ae70e57e182b7e07538670fb9aca
+      size: 109023723
     - path: mlops/preprocess_data.py
       hash: md5
-      md5: 081a900a489468d03055da9057523d6b
-      size: 4727
+      md5: 483dccae1136908ed9e9139431531f3d
+      size: 4719
     outs:
     - path: ./data/interim/preprocessed_data.csv
       hash: md5
-      md5: 62c75a744b133f8a5fa71f9b20b757d1
-      size: 5057353
+      md5: 9fcf664ff102876764e35085fe6205da
+      size: 6945839
     - path: ./data/processed/X_test.csv
       hash: md5
-      md5: f08169b958a264b31bd7d4cab75b68d9
-      size: 4704197
+      md5: c06e97c6e6094a88508f44ad0824ee47
+      size: 4343577
     - path: ./data/processed/X_train.csv
       hash: md5
-      md5: a4736cbc100da64e2151009f360267d5
-      size: 18816770
+      md5: ab27421b814b0754763cac669bb23dcf
+      size: 17370138
     - path: ./data/processed/y_test.csv
       hash: md5
-      md5: 9bb2de7756e4bcd3dfbac3888da97a37
-      size: 375057
+      md5: 0a80013e1cc853668aa28a82bcf34466
+      size: 355277
     - path: ./data/processed/y_train.csv
       hash: md5
-      md5: e6515955ba69dd173efc7944e67e1fc1
-      size: 1500063
+      md5: 064cd8e059d0013dd2f50fc2d8ece14f
+      size: 1421345
   train:
     cmd: python mlops/train.py --config params.yaml
     deps:
     - path: ./data/processed/X_train.csv
       hash: md5
-      md5: a4736cbc100da64e2151009f360267d5
-      size: 18816770
+      md5: ab27421b814b0754763cac669bb23dcf
+      size: 17370138
     - path: ./data/processed/y_train.csv
       hash: md5
-      md5: e6515955ba69dd173efc7944e67e1fc1
-      size: 1500063
+      md5: 064cd8e059d0013dd2f50fc2d8ece14f
+      size: 1421345
     - path: mlops/train.py
       hash: md5
-      md5: 343faa6e4e0899b3a1fae6c2408499fe
-      size: 4140
+      md5: 8688a53094f3b3cb6a36cedb9515ad23
+      size: 4059
     outs:
     - path: ./models/model.pkl
       hash: md5
-      md5: 82abf46e541f6f5554eb20cad06bfb1f
-      size: 185458481
+      md5: 49e6d2d610b050348f678043da826a6b
+      size: 186572913
   evaluate:
     cmd: python mlops/evaluate.py --config params.yaml
     deps:
     - path: ./data/processed/X_test.csv
       hash: md5
-      md5: f08169b958a264b31bd7d4cab75b68d9
-      size: 4704197
+      md5: c06e97c6e6094a88508f44ad0824ee47
+      size: 4343577
     - path: ./data/processed/y_test.csv
       hash: md5
-      md5: 9bb2de7756e4bcd3dfbac3888da97a37
-      size: 375057
+      md5: 0a80013e1cc853668aa28a82bcf34466
+      size: 355277
     - path: ./models/model.pkl
       hash: md5
-      md5: 82abf46e541f6f5554eb20cad06bfb1f
-      size: 185458481
+      md5: 49e6d2d610b050348f678043da826a6b
+      size: 186572913
     - path: mlops/evaluate.py
       hash: md5
-      md5: 297ff7eb23e47c32d3bb730acb5d7c17
-      size: 4391
+      md5: be26be1af5a86ba70f77d39e7e9976eb
+      size: 4296
     outs:
     - path: ./reports/figures/feature_importance.png
       hash: md5
-      md5: 09a6bc11d9abd522d97d037718f0d0bc
-      size: 27426
+      md5: f01ee2207bc78a2ca33c488deb56137a
+      size: 27600
     - path: ./reports/figures/regression_plot.png
       hash: md5
-      md5: 0a41b56a284a321e03b64faabba8ef2c
-      size: 130266
+      md5: 8cb4053bf2d3c9005e0fad2a72379ccd
+      size: 150437
   convert_to_onnx:
     cmd: python mlops/convert_to_onnx.py --config params.yaml
     deps:
     - path: ./data/processed/X_train.csv
       hash: md5
-      md5: a4736cbc100da64e2151009f360267d5
-      size: 18816770
+      md5: ab27421b814b0754763cac669bb23dcf
+      size: 17370138
     - path: ./models/model.pkl
       hash: md5
-      md5: 82abf46e541f6f5554eb20cad06bfb1f
-      size: 185458481
+      md5: 49e6d2d610b050348f678043da826a6b
+      size: 186572913
     - path: mlops/convert_to_onnx.py
       hash: md5
-      md5: aabf33dd5845b65b418773aa945647ff
-      size: 942
+      md5: 41ac27a173110e41381ac2c34dbb00ac
+      size: 915
     outs:
     - path: ./models/model.onnx
       hash: md5
-      md5: e3bd8688bdcf168b36a2ff4af3969d94
-      size: 102751883
+      md5: 0d1b3a194f89694deb1a03313bfd7229
+      size: 103394238
