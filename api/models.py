@@ -8,6 +8,9 @@ class HomeFeatures(BaseModel):
     square_feet: float
     latitude: float
     longitude: float
-    has_thumbnail: bool
-    has_photo: bool
-    allows_pets: Optional[bool] = None
+    has_photo_Thumbnail: bool
+    has_photo_Yes: bool
+    pets_allowed_CatsDogs: bool
+    pets_allowed_CatsDogsNone: bool
+    pets_allowed_Dogs: bool
+    pets_allowed_unknown: bool

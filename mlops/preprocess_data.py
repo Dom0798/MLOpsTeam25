@@ -89,6 +89,8 @@ def preprocess_data(data_path: str, data_preprocessed_path: str,
     # Encode categorical columns
     data = encode_categorical(data)
     print(f"Preprocessed data shape: {data.shape}")
+    # remove comas from column names
+    data.columns = data.columns.str.replace(',', '')
     data.to_csv(data_preprocessed_path, index=False)
     X_train, X_test, y_train, y_test = split_data(data, "price", X_train_path, X_test_path, y_train_path, y_test_path, config, test_size, random_state)
     return X_train, X_test, y_train, y_test

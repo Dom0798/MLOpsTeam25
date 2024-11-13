@@ -20,29 +20,29 @@ reports:
   images_path: ./reports/figures
 train:
   dataset_mean:
-    bathrooms: 1.44971084
-    bedrooms: 1.74331524
-    square_feet: 960.60865824
-    latitude: 36.95384167
-    longitude: -91.47973708
-    has_photo_Thumbnail: 0.34308999
-    has_photo_Yes: 0.56387381
-    pets_allowed_Cats,Dogs: 0.37335965
-    pets_allowed_Cats,Dogs,None: 1.265e-05
-    pets_allowed_Dogs: 0.00120218
-    pets_allowed_unknown: 0.60711438
+    bathrooms: 1.44955133
+    bedrooms: 1.74307375
+    square_feet: 959.15218134
+    latitude: 36.95684732
+    longitude: -91.48026723
+    has_photo_Thumbnail: 0.3426738
+    has_photo_Yes: 0.56449102
+    pets_allowed_CatsDogs: 0.37389731
+    pets_allowed_CatsDogsNone: 1.266e-05
+    pets_allowed_Dogs: 0.00121502
+    pets_allowed_unknown: 0.60661174
   dataset_std:
-    bathrooms: 0.54872726
-    bedrooms: 0.73872453
-    square_feet: 427.33350443
-    latitude: 4.5985552
-    longitude: 15.77015337
-    has_photo_Thumbnail: 0.47474425
-    has_photo_Yes: 0.49590649
-    pets_allowed_Cats,Dogs: 0.48369948
-    pets_allowed_Cats,Dogs,None: 0.00355732
-    pets_allowed_Dogs: 0.03465186
-    pets_allowed_unknown: 0.48839485
+    bathrooms: 0.54832778
+    bedrooms: 0.73935424
+    square_feet: 389.34151967
+    latitude: 4.6022331
+    longitude: 15.77415241
+    has_photo_Thumbnail: 0.47460649
+    has_photo_Yes: 0.4958266
+    pets_allowed_CatsDogs: 0.48383993
+    pets_allowed_CatsDogsNone: 0.00355759
+    pets_allowed_Dogs: 0.03483618
+    pets_allowed_unknown: 0.48850482
   model_name: RandomForestRegressor
   model_path: ./models/model.pkl
   models:

@@ -7,15 +7,14 @@ import joblib
 import pandas as pd
 import xgboost
 from catboost import CatBoostRegressor
-
+from sklearn.ensemble import RandomForestRegressor
 from utils import load_config, rewrite_yaml
 from xgboost import XGBRegressor
-from sklearn.ensemble import RandomForestRegressor
 
 import mlflow
 
 
-def train(X_train_path: str, y_train_path: str, model_name: str, model_path: str, train_means: dict, train_std: dict, config: dict = None, **model_params) -> XGBRegressor:
+def train(X_train_path: str, y_train_path: str, model_name: str, model_path: str, train_means: dict, train_std: dict, config: dict = None, **model_params) -> 'Model':
     X_train = pd.read_csv(X_train_path)
     y_train = pd.read_csv(y_train_path)
     if model_name == 'XGBRegressor':
@@ -64,19 +63,20 @@ def train(X_train_path: str, y_train_path: str, model_name: str, model_path: str
                     mlflow.log_dict(model.feature_importances_, 'train_feature_importance.json')
                 config['mlflow']['last_run_id'] = run.info.run_id
                 rewrite_yaml(config, 'params.yaml')
-            
+
     else:
         model.fit(X_train, y_train)
 
     joblib.dump(model, model_path)
     return model
 
+
 if __name__ == '__main__':
     argparse = argparse.ArgumentParser()
     argparse.add_argument('--config', dest='config', required=True)
     args = argparse.parse_args()
     config = load_config(args.config)
-    train(config['data']['X_train_path'], config['data']['y_train_path'], config['train']['model_name'], 
-          #config['train']['model_path'].format(model_name=config['train']['model_name']), 
+    train(config['data']['X_train_path'], config['data']['y_train_path'], config['train']['model_name'],
+          # config['train']['model_path'].format(model_name=config['train']['model_name']),
           config['train']['model_path'], config['train']['dataset_mean'], config['train']['dataset_std'],
           config, **config['train']['models'][config['train']['model_name']])

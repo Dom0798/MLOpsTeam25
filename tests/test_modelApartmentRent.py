@@ -116,7 +116,7 @@ def test_evaluation_w_benchmark(model_trained):
 
 
 ## Test model input
-def test_input_ranges_n_inference(model_trained, input_data=[1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1, 0]):
+def test_input_ranges_n_inference(model_trained, input_data=[1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1]):
     input_data = np.array(input_data).reshape(1, -1)
     org_data = model_trained.X_train
     for i, feature in enumerate(org_data.columns):
@@ -128,7 +128,7 @@ def test_input_ranges_n_inference(model_trained, input_data=[1, 1, 120, 25, -70,
     print(f"Predicted price: ${np.exp(prediction):.3f}")
 
 
-def test_onnx_inference(params_only, input_data=[1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1, 0]):
+def test_onnx_inference(params_only, input_data=[1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1]):
     input_data = np.array(input_data).reshape(1, -1)
     # print("1st type", input_data.dtype)
     onnx_model = onnx.load('../models/model.onnx')
@@ -158,4 +158,4 @@ def test_integration(model_w_params):
     model.train_model()
     test_evaluation_w_benchmark(model)
     model.evaluate_model()
-    test_input_ranges_n_inference(model, [1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1, 0])
+    test_input_ranges_n_inference(model, [1, 1, 120, 25, -70, 1, 0, 1, 1, 0, 1])

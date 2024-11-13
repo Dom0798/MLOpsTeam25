@@ -33,11 +33,11 @@ def predict(features: HomeFeatures) -> float:
         features.square_feet,
         features.latitude,
         features.longitude,
-        1.0 if features.has_thumbnail else 0.0,
-        1.0 if features.has_photo else 0.0,
-        1.0 if features.allows_pets else 0.0,
-        1.0 if features.allows_pets else 0.0,
-        1.0 if features.allows_pets else 0.0,
-        1.0 if features.allows_pets is None else 0.0
+        features.has_photo_Thumbnail,
+        features.has_photo_Yes,
+        features.pets_allowed_CatsDogs,
+        features.pets_allowed_CatsDogsNone,
+        features.pets_allowed_Dogs,
+        features.pets_allowed_unknown
     ]).astype(np.float32)
     return predict_array(arr)
